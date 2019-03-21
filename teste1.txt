@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 @@@#####@@@@!#$FEgrejfhwibilarelgfjfdvk,ngvedg khvfvdhjvsfaddddddddddddddd
+=======
+@@@#####@@@@!#$FEgrejfhwibilarelgfjfdvk,ngvedg khvfvdhjvergstthwertrrethrhttgghtrg
+>>>>>>> 3c0ed74bd919b32c177206adaaf597a698d02c69
