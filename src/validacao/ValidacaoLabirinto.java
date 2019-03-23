@@ -9,7 +9,6 @@ public class ValidacaoLabirinto {
 	public static void validacaoEntradaLabirinto(List<String> labirintoEntrada) {
 		int quantidadeLinhas;
 		int temEntrada = 0;
-		int temSaida = 0;
 		
 		for(String string : labirintoEntrada) {
 			if (string.equals(labirintoEntrada.get(0))) {
@@ -22,7 +21,6 @@ public class ValidacaoLabirinto {
 			}
 			if (string.equals(labirintoEntrada.get(1)) || string.equals(labirintoEntrada.get(labirintoEntrada.size() - 1))) {
 				temEntrada += possuiEntradaNa1Linha(string);
-				temSaida += possuiSaidaNa1Linha(string);
 			}			
 		}
 	}
