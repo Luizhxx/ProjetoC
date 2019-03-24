@@ -1,32 +1,31 @@
 package leitura;
-
 import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.FileReader;
 
-public class Leitor {
-
-	
+public class Leitor 
+{
 	@SuppressWarnings("resource")
-	public static String leitorDeArquivos() {
-		String linha = "";
-		try {
-			FileInputStream arquivo = new FileInputStream("teste1.txt");
-			InputStreamReader input = new InputStreamReader(arquivo);
-			BufferedReader br = new BufferedReader(input);
-			do {
-				linha = br.readLine();
-				if (linha != null) {
-					System.out.println(linha);
-				}
-				
-			} while (linha != null);
-		} catch (IOException e) {
-			System.err.println("Erro ao ler o arquivo");
+	public static String[] lerArquivo(String caminho) throws Exception
+	{
+		try 
+		{
+			BufferedReader leitor = new BufferedReader(new FileReader(caminho)); 
+			int tamanho = Integer.parseInt(leitor.readLine());
+			String linhas[] = new String[tamanho+1];
+			linhas[0] = Integer.toString(tamanho);
+			int cont = 1;
+			
+			while(leitor.ready())
+			{ 
+				linhas[cont] = leitor.readLine();  
+				cont++;
+			}
+			leitor.close();
+			return linhas;
+		} 
+		catch(Exception erro)
+		{
+			throw new Exception ("Arquivo Invalido");
 		}
-		System.out.println(linha);
-		return linha;
 	}
-	
 }

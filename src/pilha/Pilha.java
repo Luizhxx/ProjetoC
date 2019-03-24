@@ -1,5 +1,4 @@
 package pilha;
-
 import java.util.Arrays;
 
 @SuppressWarnings({ "unchecked", "hiding" })
