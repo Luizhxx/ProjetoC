@@ -9,27 +9,32 @@ public class Leitor
 
 	public static String[] lerArquivo(String caminho) throws Exception
 	{
-		try 
+		BufferedReader leitor = null;
+		String tamanho = null;
+		String linhas[] = null;
+		int cont = 0;
+		
+		try
 		{
-			BufferedReader leitor = new BufferedReader(new FileReader(caminho)); 
-			int tamanho = Integer.parseInt(leitor.readLine());
-			String linhas[] = new String[tamanho+1];
-			linhas[0] = Integer.toString(tamanho);
-			int cont = 1;
-			
-			while(leitor.ready())
-			{ 
-				linhas[cont] = leitor.readLine();  
-				cont++;
-			}
-			leitor.close();
-			ValidacaoLabirinto.validacaoLabirinto(linhas);
-			return linhas;
-		} 
+			leitor = new BufferedReader(new FileReader(caminho));
+			tamanho = leitor.readLine();
+			linhas = new String[Integer.parseInt(tamanho)+1];
+			linhas[cont] = tamanho;
+			cont++;
+		}
 		catch(Exception erro)
 		{
-			erro.printStackTrace();
-			throw new Exception ("Arquivo Invalido");
+			System.err.println("Arquivo invalido: Vazio / Em branco / Outro");
 		}
+		
+		while(leitor.ready())
+		{ 
+			linhas[cont] = leitor.readLine();  
+			cont++;
+		}
+		
+		leitor.close();
+		ValidacaoLabirinto.validacaoLabirinto(linhas);
+		return linhas;
 	}
 }
