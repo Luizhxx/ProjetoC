@@ -1,53 +1,77 @@
 package validacao;
 
-import java.util.List;
-
-import org.omg.CORBA.OBJECT_NOT_EXIST;
+import com.sun.media.sound.InvalidFormatException;
 
 public class ValidacaoLabirinto {
 
-	public static void validacaoEntradaLabirinto(List<String> labirintoEntrada) {
-		int quantidadeLinhas;
-		int temEntrada = 0;
+	public static void validacaoLabirinto(String[] labirinto) throws Exception {
 		
-		for(String string : labirintoEntrada) {
-			if (string.equals(labirintoEntrada.get(0))) {
-				theFirstLineIsInt(string);
-				quantidadeLinhas = Integer.parseInt(string);
-				if ((labirintoEntrada.size() -1) > quantidadeLinhas) {
-					throw new NumberFormatException("A quantidade linhas é maior quea definida no arquivo de entrada");
+		theFirstLineIsInt(labirinto[0]);	
+		temEntrada(labirinto);
+		temSaida(labirinto);
+		todosElementosValidos(labirinto);
+	}
+	
+	public static void theFirstLineIsInt(String firstLine) throws InvalidFormatException {
+		if (!(Integer.parseInt(firstLine) > 0 && Integer.parseInt(firstLine) < 10000000)) {
+			throw new InvalidFormatException("Arquivo Invalido");
+		}
+	}
+	
+	private static void temEntrada(String[] labirinto) throws InvalidFormatException {
+		int entrada = 0;
+		for (int i = 1; i < labirinto.length; i++) {
+			String linha = labirinto[i];
+			if (i == 1 || i == labirinto.length - 1) {
+				for (int j = 0; j < linha.length(); j++) {
+					if (linha.charAt(j) == 'E') {
+						entrada++;
+					}
 				}
 				continue;
 			}
-			if (string.equals(labirintoEntrada.get(1)) || string.equals(labirintoEntrada.get(labirintoEntrada.size() - 1))) {
-				temEntrada += possuiEntradaNa1Linha(string);
-			}			
-		}
-	}
-	
-	private static void theFirstLineIsInt(String primeiraLinha) {
-		if ((Integer.parseInt(primeiraLinha) > 0 || Integer.parseInt(primeiraLinha) < 100000000)) {
-			throw new OBJECT_NOT_EXIST("A primeira linha do arquivo de entrada não é um número válido");
-		}
-	}
-	
-	public static int possuiEntradaNa1Linha(String linha) {
-		int qtdEntradas = 0;
-		for (int i = 0; i < linha.length(); i++) {
-			if (linha.charAt(i) == 'E' || linha.charAt(i) == 'e') {
-				qtdEntradas++;
+			if (linha.charAt(0) == 'E' || linha.charAt(linha.length() - 1) == 'E') {
+				entrada++;
 			}
 		}
-		return qtdEntradas;
+		
+		if (entrada == 0) {
+			throw new InvalidFormatException("O labirinto não possui entrada!");
+		}
+		
+		if (entrada > 1) {
+			throw new InvalidFormatException("O labirinto possui mais de uma entrada!");
+		}
 	}
 	
-	public static int possuiSaidaNa1Linha(String linha) {
-		int qtdSaida = 0;
-		for (int i = 0; i < linha.length(); i++) {
-			if (linha.charAt(i) == 'S' || linha.charAt(i) == 's') {
-				qtdSaida++;
+	private static void temSaida(String[] labirinto) throws InvalidFormatException {
+		int saida = 0;
+		for (int i = 1; i < labirinto.length; i++) {
+			String linha = labirinto[i];
+			for (int j = 0; j < linha.length(); j++) {
+				if (linha.charAt(j) == 'S') {
+					saida++;
+				}
 			}
 		}
-		return qtdSaida;
+		
+		if (saida == 0) {
+			throw new InvalidFormatException("O labirinto não possui saida!");
+		}
+		
+		if (saida > 1) {
+			throw new InvalidFormatException("O labirinto possui mais de uma entrada!");
+		}
+	}
+	
+	private static void todosElementosValidos(String[] labirinto) throws InvalidFormatException {
+		for (int i = 1; i < labirinto.length; i++) {
+			String linha = labirinto[i];
+			for (int j = 0; j < linha.length(); j++) {
+				if (!(linha.charAt(j) == 'S' || linha.charAt(j) == 'E' || linha.charAt(j) == '#' || linha.charAt(j) == ' ')) {
+					throw new InvalidFormatException("O labirinto possui elementos inválidos!");
+				}
+			}
+		}
 	}
 }

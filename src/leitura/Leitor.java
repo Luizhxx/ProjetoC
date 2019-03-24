@@ -2,9 +2,11 @@ package leitura;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+import validacao.ValidacaoLabirinto;
+
 public class Leitor 
 {
-	@SuppressWarnings("resource")
+
 	public static String[] lerArquivo(String caminho) throws Exception
 	{
 		try 
@@ -21,10 +23,12 @@ public class Leitor
 				cont++;
 			}
 			leitor.close();
+			ValidacaoLabirinto.validacaoLabirinto(linhas);
 			return linhas;
 		} 
 		catch(Exception erro)
 		{
+			erro.printStackTrace();
 			throw new Exception ("Arquivo Invalido");
 		}
 	}
