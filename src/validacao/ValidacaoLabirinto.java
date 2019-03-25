@@ -9,6 +9,7 @@ public class ValidacaoLabirinto {
 		theFirstLineIsInt(labirinto[0]);	
 		temEntrada(labirinto);
 		temSaida(labirinto);
+		qtdLinhasValidas(labirinto);
 		todosElementosValidos(labirinto);
 	}
 	
@@ -61,6 +62,13 @@ public class ValidacaoLabirinto {
 		
 		if (saida > 1) {
 			throw new InvalidFormatException("O labirinto possui mais de uma entrada!");
+		}
+	}
+	
+	private static void qtdLinhasValidas(String[] labirinto) {
+		int qtdLinhas = Integer.parseInt(labirinto[0]);
+		if (labirinto.length - 2 > qtdLinhas) {
+			throw new IllegalArgumentException("quantidade de linhas inválidas!");
 		}
 	}
 	

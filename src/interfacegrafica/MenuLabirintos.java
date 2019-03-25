@@ -38,6 +38,9 @@ public class MenuLabirintos {
 					
 					break; 
 				case "2":
+					if (labirinto.equals(null)) {
+						labirinto = Leitor.lerArquivo(caminho);
+					}
 					
 					break;
 				case "3":
