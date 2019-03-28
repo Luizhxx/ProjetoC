@@ -15,16 +15,13 @@ public class MenuLabirintos {
 		do {
 			try {
 				System.out.println("\t+------------------------------------------------+");
-				System.out.println("\t|                   Labirintos                   |");
+				System.out.println("\t|                   LABIRINTOS                   |");
 				System.out.println("\t+------------------------------------------------+\n");
-				
 				System.out.println("\t+------------------------------------------------+");
-				System.out.println("\t| 1 - Configurar o path do arquivo do labirinto  |");
-				System.out.println("\t+------------------------------------------------+");
-				System.out.println("\t+------------------------------------------------+");
+				System.out.println("\t| 1 - Configurar o path do arquivo do labirinto  |");;
+				System.out.println("\t|                                                |");
 				System.out.println("\t| 2 - Para iniciar a fuga do labirinto           |");
-				System.out.println("\t+------------------------------------------------+");
-				System.out.println("\t+------------------------------------------------+");
+				System.out.println("\t|                                                |");
 				System.out.println("\t| 3 - Para voltar ao menu                        |");
 				System.out.println("\t+------------------------------------------------+");
 

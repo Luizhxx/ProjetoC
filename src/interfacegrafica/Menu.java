@@ -11,16 +11,15 @@ public class Menu {
 		do {
 			try {
 
-				System.out.println("\t+----------------------------------------------+");
-				System.out.println("\t|                     Menu                     |");
-				System.out.println("\t+----------------------------------------------+\n");
+				System.out.println("\t+------------------------------------------------+");
+				System.out.println("\t|                      MENU                      |");
+				System.out.println("\t+------------------------------------------------+\n");
 				
-				System.out.println("\t+----------------------------------------------+");
-				System.out.println("\t| 1 - Labirintos                               |");
-				System.out.println("\t+----------------------------------------------+");
-				System.out.println("\t+----------------------------------------------+");
-				System.out.println("\t| 2 - Para sair da aplicação                   |");
-				System.out.println("\t+----------------------------------------------+");
+				System.out.println("\t+------------------------------------------------+");
+				System.out.println("\t| 1 - Labirintos                                 |");
+				System.out.println("\t|                                                |");
+				System.out.println("\t| 2 - Para sair da aplicação                     |");
+				System.out.println("\t+------------------------------------------------+");
 				
 				escolha = entradaUsuario.readLine();
 				

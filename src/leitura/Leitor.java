@@ -9,19 +9,17 @@ public class Leitor {
 
 	@SuppressWarnings("resource")
 	public static String[] lerArquivo(String caminho) throws Exception {
-		BufferedReader leitor = null;
-		String tamanho = null;
-		String linhas[] = null;
+		
+		BufferedReader leitor = new BufferedReader(new FileReader(caminho));
 		int cont = 0;
 
-		leitor = new BufferedReader(new FileReader(caminho));
-		tamanho = leitor.readLine();
-		linhas = new String[Integer.parseInt(tamanho) + 1];
+		String tamanho = leitor.readLine();
+		String[] linhas = new String[Integer.parseInt(tamanho) + 1];
 		linhas[cont] = tamanho;
 		cont++;
 
 		while (leitor.ready()) {
-			if (linhas.length == Integer.parseInt(tamanho) + 1) {
+			if (linhas.length > Integer.parseInt(tamanho) + 1) {
 				throw new IndexOutOfBoundsException("a quantidade de linhas não está de acordo com a quantidade de linhas definida");
 			}
 			linhas[cont] = leitor.readLine();
