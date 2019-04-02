@@ -44,7 +44,7 @@ public class ValidacaoLabirinto {
 			}
 		}		
 		if (entrada == 0) {
-			throw new InvalidFormatException("O labirinto n„o possui entrada!");
+			throw new InvalidFormatException("O labirinto n√£o possui entrada!");
 		}
 		
 		if (entrada > 1) {
@@ -65,7 +65,7 @@ public class ValidacaoLabirinto {
 		}
 		
 		if (saida == 0) {
-			throw new InvalidFormatException("O labirinto n„o possui saida!");
+			throw new InvalidFormatException("O labirinto n√£o possui saida!");
 		}
 		
 		if (saida > 1) {
@@ -91,7 +91,7 @@ public class ValidacaoLabirinto {
 	private static void qtdLinhasValidas(String[] labirinto) {
 		int qtdLinhas = Integer.parseInt(labirinto[0]);
 		if (labirinto.length - 2 > qtdLinhas) {
-			throw new IllegalArgumentException("quantidade de linhas inv·lidas!");
+			throw new IllegalArgumentException("Quantidade de linhas inv√°lidas!");
 		}
 	}
 	
@@ -100,7 +100,7 @@ public class ValidacaoLabirinto {
 			String linha = labirinto[i];
 			for (int j = 0; j < linha.length(); j++) {
 				if (!(linha.charAt(j) == 'S' || linha.charAt(j) == 'E' || linha.charAt(j) == '#' || linha.charAt(j) == ' ')) {
-					throw new InvalidFormatException("O labirinto possui elementos inv·lidos!");
+					throw new InvalidFormatException("O labirinto possui elementos inv√°lidos!");
 				}
 			}
 		}

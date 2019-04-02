@@ -18,7 +18,7 @@ public class Menu {
 				System.out.println("\t+------------------------------------------------+");
 				System.out.println("\t| 1 - Labirintos                                 |");
 				System.out.println("\t|                                                |");
-				System.out.println("\t| 2 - Para sair da aplicaÁ„o                     |");
+				System.out.println("\t| 2 - Para sair da aplica√ß√£o                     |");
 				System.out.println("\t+------------------------------------------------+");
 				
 				escolha = entradaUsuario.readLine();
@@ -31,11 +31,11 @@ public class Menu {
 					
 					break;
 				default:
-					System.err.println("OpÁ„o inv·lida, tente novamente!");
+					System.err.println("Op√ß√£o inv√°lida, tente novamente!");
 					continue;
 				}
 			}catch (Exception e) {
-				System.err.println("OpÁ„o inv·lida, tente novamente!");
+				System.err.println("Op√ß√£o inv√°lida, tente novamente!");
 				continue;
 			}
 		} while (!escolha.equals("2") );

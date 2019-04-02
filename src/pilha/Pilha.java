@@ -2,9 +2,9 @@ package pilha;
 import java.util.Arrays;
 
 @SuppressWarnings({ "unchecked", "hiding" })
-public class Pilha <Coordenada>
+public class Pilha <Item>
 {
-    private Coordenada[] vetor;
+    private Item[] vetor;
     private int ultimo;
 
 	public Pilha (int tamanho) throws Exception
@@ -13,11 +13,11 @@ public class Pilha <Coordenada>
             throw new Exception ("Tamanho invalido");
 
         this.ultimo = -1;
-        this.vetor  = (Coordenada[])new Object [tamanho];
+        this.vetor  = (Item[])new Object [tamanho];
     }
 
     // push
-    public void guarde (Coordenada valor) throws Exception
+    public void guarde (Item valor) throws Exception
     {
         if (valor==null)
             throw new Exception ("Valor ausente");
@@ -40,7 +40,7 @@ public class Pilha <Coordenada>
     }
 
     // peek
-    public Coordenada getValor () throws Exception
+    public Item getValor () throws Exception
     {
         if (this.ultimo==-1)
             throw new Exception ("Nada guardado");
@@ -66,14 +66,15 @@ public class Pilha <Coordenada>
         return this.ultimo+1;
     }  
 
-    public String toString ()
-    {
-        return (this.ultimo+1)+
-               " elemento(s)"+
-               (this.ultimo!=-1?", sendo o ultimo "+this.vetor[this.ultimo]:"");
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ultimo;
+		result = prime * result + Arrays.hashCode(vetor);
+		return result;
+	}
 
-    @SuppressWarnings("rawtypes")
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -90,5 +91,9 @@ public class Pilha <Coordenada>
 		return true;
 	}
 
-    
+	@Override
+	public String toString() {
+		return "Pilha [vetor=" + Arrays.toString(vetor) + "]";
+	}
+
 }

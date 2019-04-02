@@ -1,47 +1,41 @@
 package pilha;
 
-public class Coordenada<Linha, Coluna> { 
-	private Linha linha; 
-	private Coluna coluna; 
+public class Coordenada { 
+	private int linha; 
+	private int coluna; 
 	
-	public Coordenada(Linha x, Coluna y)
+	public Coordenada(int linha, int coluna)
 	{ 
-		this.linha = x; 
-		this.coluna = y; 
+		this.linha = linha; 
+		this.coluna = coluna; 
 	}
-	
-	public Linha getLinha() {
+
+	public int getLinha() {
 		return linha;
 	}
 
-
-	public void setLinha(Linha linha) {
+	public void setLinha(int linha) {
 		this.linha = linha;
 	}
 
-
-	public Coluna getColuna() {
+	public int getColuna() {
 		return coluna;
 	}
 
-
-	public void setColuna(Coluna coluna) {
+	public void setColuna(int coluna) {
 		this.coluna = coluna;
 	}
 
-
-	public void setY(Coluna y) {
-		this.coluna = y;
-	}
-
-
 	@Override
-	public String toString() {
-		return "Coordenada [linha= " + linha + ", coluna= " + coluna + "]";
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + coluna;
+		result = prime * result + linha;
+		return result;
 	}
 
 	@Override
-	@SuppressWarnings("rawtypes")
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -50,20 +44,16 @@ public class Coordenada<Linha, Coluna> {
 		if (getClass() != obj.getClass())
 			return false;
 		Coordenada other = (Coordenada) obj;
-		if (coluna == null) {
-			if (other.coluna != null)
-				return false;
-		} else if (!coluna.equals(other.coluna))
+		if (coluna != other.coluna)
 			return false;
-		if (linha == null) {
-			if (other.linha != null)
-				return false;
-		} else if (!linha.equals(other.linha))
+		if (linha != other.linha)
 			return false;
 		return true;
 	}
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "Coordenada (" + linha + ", " + coluna + ")";
+	}
 	
 } 

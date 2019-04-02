@@ -19,14 +19,14 @@ public class Leitor {
 		cont++;
 
 		while (leitor.ready()) {
-			if (linhas.length > Integer.parseInt(tamanho) + 1) {
-				throw new IndexOutOfBoundsException("a quantidade de linhas n„o est· de acordo com a quantidade de linhas definida");
+			if (cont >= linhas.length) {
+				throw new Exception("A quantidade de linhas n√£o est√° de acordo com a informada!");
 			}
 			linhas[cont] = leitor.readLine();
 			cont++;
 		}
 
-		ValidacaoLabirinto.validacaoLabirinto(linhas);
+		//ValidacaoLabirinto.validacaoLabirinto(linhas);
 		leitor.close();
 		return linhas;
 	}
