@@ -10,9 +10,6 @@ public class Labirinto {
 	private char[][] labirinto = null;
 	private Coordenada atual = null;
 	private Pilha<Coordenada> caminho = null;
-	Pilha<Pilha<Coordenada>> possibilidades= null;
-	Pilha<Coordenada> adjacentes = null;
-	
 	
 	public Labirinto(String[] arquivo) {
 		this.linhas = Integer.parseInt(arquivo[0]);
@@ -29,72 +26,44 @@ public class Labirinto {
 	}
 		
 	public void encontrarCaminho() throws Exception {
-		this.caminho = new Pilha<Coordenada>((this.linhas*this.colunas));
-		this.possibilidades = new Pilha<Pilha<Coordenada>>((this.linhas*this.colunas));	
-		this.adjacentes = new Pilha<Coordenada>(3);
-		boolean controle = true;
 		
-		while(labirinto[atual.getLinha()][atual.getColuna()] != 'S') {
-			if(controle)
-				controle = progredir();
-			else
-				controle = !regredir();
+		this.caminho = new Pilha<Coordenada>(this.linhas*this.colunas);
+		Pilha<Pilha<Coordenada>> possibilidades = new Pilha<Pilha<Coordenada>>(this.linhas*this.colunas);
+		Pilha<Coordenada> adjacentes = new Pilha<Coordenada>(3);
+		boolean controle = false;
+		
+		while(this.labirinto[atual.getLinha()][atual.getColuna()] != 'S') {
 			
-			imprimir();
-		}
-	
-	}
-	
-	private boolean progredir() throws Exception {
-		
-		if(this.adjacentes.isVazia()) {
-			Pilha<Coordenada> auxiliar = new Pilha<Coordenada>(3);
-			obterAdjacentes(this.atual, auxiliar);
-			if(auxiliar.isVazia()) {
-				return false;
-			}else {
-				this.atual = auxiliar.getValor();
-				this.caminho.guarde(atual);
+			if(controle == false) {
+				adjacentes = new Pilha<Coordenada>(3);
+				obterAdjacentes(this.atual, adjacentes);
+			}
+			
+			if(!adjacentes.isVazia()) {
+				this.atual = adjacentes.getValor();
+				adjacentes.jogueForaValor();
 				
 				if(labirinto[atual.getLinha()][atual.getColuna()] != 'S')
-					this.labirinto[this.atual.getLinha()][this.atual.getColuna()] = '*';
+					labirinto[atual.getLinha()][atual.getColuna()] = '*';
 				
-				auxiliar.jogueForaValor();
-				this.possibilidades.guarde(auxiliar);
-				return true;
+				this.caminho.guarde(atual);
+				possibilidades.guarde(adjacentes);
+				controle = false;
 			}
-		}else {
-			this.atual = this.adjacentes.getValor();
-			this.caminho.guarde(atual);
-			
-			if(labirinto[atual.getLinha()][atual.getColuna()] != 'S')
-				this.labirinto[this.atual.getLinha()][this.atual.getColuna()] = '*';
-			
-			this.adjacentes.jogueForaValor();
-			this.possibilidades.guarde(this.adjacentes);
-			return true;
+			else {
+				while(adjacentes.isVazia()) {
+					this.atual = this.caminho.getValor();
+					this.labirinto[this.atual.getLinha()][this.atual.getColuna()] = ' ';
+					this.caminho.jogueForaValor();
+					
+					adjacentes = possibilidades.getValor();
+					possibilidades.jogueForaValor();
+					controle = true;
+				}
+			}
 		}
 	}
 	
-	private boolean regredir() throws Exception {
-		
-		if(this.adjacentes.isVazia()) {
-			this.adjacentes = this.possibilidades.getValor();
-			this.possibilidades.jogueForaValor();
-			this.labirinto[this.atual.getLinha()][this.atual.getColuna()] = ' ';
-			
-			if(this.adjacentes.isVazia()) {
-				this.caminho.jogueForaValor();
-				this.atual = this.caminho.getValor();
-				return true;
-			}else {
-				return false;
-			}
-		}else {
-			return false;
-		}
-		
-	}
 	
 	private void obterAdjacentes(Coordenada atual, Pilha<Coordenada> adjacentes) throws Exception{
 		
@@ -158,18 +127,17 @@ public class Labirinto {
 				{
 					Coordenada auxiliar = new Coordenada(atual.getLinha(), atual.getColuna()+1);
 					adjacentes.guarde(auxiliar);
-				} 
+				}
+				if(this.labirinto[atual.getLinha()][atual.getColuna()-1] == ' ' ||
+						this.labirinto[atual.getLinha()][atual.getColuna()-1] == 'S')
 				{
-					if(this.labirinto[atual.getLinha()][atual.getColuna()-1] == ' ' ||
-							this.labirinto[atual.getLinha()][atual.getColuna()-1] == 'S')
-					{
-						Coordenada auxiliar = new Coordenada(atual.getLinha(), atual.getColuna()-1);
-						adjacentes.guarde(auxiliar);
-					}
+					Coordenada auxiliar = new Coordenada(atual.getLinha(), atual.getColuna()-1);
+					adjacentes.guarde(auxiliar);
 				}
 			}
 		}
 	}
+
  	
 	
 	public int getLinhas() {
@@ -221,8 +189,4 @@ public class Labirinto {
 		}
 	}
 
-	@Override
-	public String toString() {
-		return "Labirinto [possibilidades=" + possibilidades + "]";
-	}
 }
