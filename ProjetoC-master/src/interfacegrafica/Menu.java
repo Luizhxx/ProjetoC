@@ -32,14 +32,14 @@ public class Menu {
 					MenuLabirintos.MenuLabs();
 					break;
 				case "2":
-					System.exit(1);
+					
 					break;
 				default:
 					System.err.println("Opção inválida, tente novamente!");
 					continue;
 				}
-			}catch (Exception erro) {
-				System.err.println(erro.getMessage());
+			}catch (Exception e) {
+				System.err.println("Opção inválida, tente novamente!");
 				continue;
 			}
 		} while (!escolha.equals("2") );

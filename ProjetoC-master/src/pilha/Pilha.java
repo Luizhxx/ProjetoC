@@ -76,7 +76,6 @@ public class Pilha <Item>
 	}
 
 	@Override
-	@SuppressWarnings("rawtypes")
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;

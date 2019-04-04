@@ -20,7 +20,7 @@ public class Leitor {
 
 		while (leitor.ready()) {
 			if (cont >= linhas.length) {
-				throw new Exception("A quantidade de linhas n√£o est√° de acordo com a informada!");
+				throw new Exception("A quantidade de linhas n„o est· de acordo com a uantidade informada!");
 			}
 			linhas[cont] = leitor.readLine();
 			cont++;

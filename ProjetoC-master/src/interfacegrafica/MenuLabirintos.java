@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import labirinto.Labirinto;
 import leitura.Leitor;
 
 public class MenuLabirintos {
@@ -13,7 +14,7 @@ public class MenuLabirintos {
 		String escolha = new String();
 		String caminho = new String();
 		String[] labirinto = null;
-		
+				
 		do {
 			try {
 				System.out.println("\t+------------------------------------------------+");
@@ -40,24 +41,23 @@ public class MenuLabirintos {
 					
 				case "2":
 					if(labirinto == null)
-						throw new Exception("Arquivo nâo informado!");
+						throw new Exception("Arquivo não informado!");
 					
 					System.out.println("\t+------------------------------------------------+");
-					System.out.println("\t|                   IMPRESSÃO                    |\n");
+					System.out.println("\t|                    IMPRESSÃO                   |\n");					
 					System.out.println("\t+------------------------------------------------+\n");
-					
 					
 					for(int cont = 0; cont < labirinto.length; cont++) {
 						System.out.println("\t\t" + labirinto[cont]);
 					}
-					
-					
 					break;
 					
 				case "3":
-					if (labirinto.equals(null)) {
-						labirinto = Leitor.lerArquivo(caminho);
-					}
+					
+					Labirinto labirintoLido = new Labirinto(labirinto);
+					labirintoLido.encontrarCaminho();
+					labirintoLido.imprimir();
+					
 					break;
 					
 				case "4":
@@ -69,7 +69,7 @@ public class MenuLabirintos {
 				
 			} catch (Exception erro) {
 				System.err.println("\n" + erro.getMessage() + "\n");
-				System.in.read();
+				erro.printStackTrace();
 				continue;
 			}
 		} while (!escolha.equals("4"));

@@ -1,5 +1,7 @@
 package labirinto;
 
+import java.util.Arrays;
+
 import pilha.Coordenada;
 import pilha.Pilha;
 
@@ -189,4 +191,49 @@ public class Labirinto {
 		}
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((atual == null) ? 0 : atual.hashCode());
+		result = prime * result + ((caminho == null) ? 0 : caminho.hashCode());
+		result = prime * result + colunas;
+		result = prime * result + Arrays.deepHashCode(labirinto);
+		result = prime * result + linhas;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Labirinto other = (Labirinto) obj;
+		if (atual == null) {
+			if (other.atual != null)
+				return false;
+		} else if (!atual.equals(other.atual))
+			return false;
+		if (caminho == null) {
+			if (other.caminho != null)
+				return false;
+		} else if (!caminho.equals(other.caminho))
+			return false;
+		if (colunas != other.colunas)
+			return false;
+		if (!Arrays.deepEquals(labirinto, other.labirinto))
+			return false;
+		if (linhas != other.linhas)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Labirinto [linhas=" + linhas + ", colunas=" + colunas + ", labirinto=" + Arrays.toString(labirinto)
+				+ ", atual=" + atual + ", caminho=" + caminho + "]";
+	}
 }
