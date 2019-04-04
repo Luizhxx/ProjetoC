@@ -13,7 +13,7 @@ public class ValidacaoLabirinto {
 		temEntradaValida(labirinto);
 		temSaida(labirinto);
 		entryPositionValidation(labirinto);
-		//exitPositionValidation(labirinto);
+		exitPositionValidation(labirinto);
 	}
 
 	public static void lineValidation(String[] linhas) throws InvalidFormatException {
@@ -47,8 +47,8 @@ public class ValidacaoLabirinto {
 					if(i == 1 && (j > 0) && (j < linha.length())) {
 						System.out.println("Entrou no 2 if");
 						linhaPosterior = labirinto[i + 1];
-						if((linha.charAt(j + 1) == '#') || (linha.charAt(j - 1) == '#')
-								|| (linhaPosterior.charAt(j) == '#'))
+						if((linha.charAt(j + 1) == '#') && (linha.charAt(j - 1) == '#')
+								&& (linhaPosterior.charAt(j) == '#'))
 							throw new InvalidFormatException("Entrada bloqueada!");
 					}
 					if((i == linha.length()) && (j > 0) && (j < linha.length())) {
@@ -88,58 +88,65 @@ public class ValidacaoLabirinto {
 		}
 	}
 	
-//	public static void exitPositionValidation(String[] labirinto) throws InvalidFormatException {
-//		for (int i = 1; i < labirinto.length; i++) {
-//			String linha = labirinto[i];
-//			for (int j = 0; j < linha.length(); j++) {
-//				String linhaAnterior;
-//				String linhaPosterior;
-//				if (linha.charAt(j) == 'S') {
-//					if(i < 1 && i < linha.length() -1 && j > 0 && j < linha.length()) {
-//						linhaAnterior = labirinto[i - 1];
-//						linhaPosterior = labirinto[i + 1];
-//						if(linhaAnterior.charAt(j) == '#' && linha.charAt(j + 1) == '#' || linha.charAt(j - 1) == '#'
-//								|| linhaPosterior.charAt(j) == '#')
-//							throw new InvalidFormatException("Saida bloqueada!");
-//					}						
-//					
-//					if(i == 1 && j > 0 && j < linha.length()) {
-//						linhaPosterior = labirinto[i + 1];
-//						if( linha.charAt(j + 1) == '#' || linha.charAt(j - 1) == '#'
-//								|| linhaPosterior.charAt(j) == '#')
-//							throw new InvalidFormatException("Saida bloqueada!");
-//					}
-//					if(i == linha.length() && j > 0 && j < linha.length()) {
-//						linhaAnterior = labirinto[i - 1];
-//						if(linhaAnterior.charAt(j) == '#' && linha.charAt(j + 1) == '#' || linha.charAt(j - 1) == '#')
-//							throw new InvalidFormatException("Saida bloqueada!");
-//					}
-//			
-//					if(j == 0 && i == 1) {
-//						linhaPosterior = labirinto[i + 1];
-//						if( linha.charAt(j + 1) == '#' || linhaPosterior.charAt(j) == '#')
-//							throw new InvalidFormatException("Saida bloqueada!");
-//					}
-//					if(j == 0 && i == linha.length()) {
-//						linhaPosterior = labirinto[i + 1];
-//						if( linha.charAt(j + 1) == '#' || linhaPosterior.charAt(j) == '#')
-//							throw new InvalidFormatException("Saida bloqueada!");
-//					}
-//					if(j == linha.length() && i == 1) {
-//						linhaAnterior = labirinto[i - 1];
-//						if( linha.charAt(j - 1) == '#' || linhaAnterior.charAt(j) == '#')
-//							throw new InvalidFormatException("Saida bloqueada!");
-//					}
-//					if(j == linha.length() && i == linha.length()) {
-//						linhaAnterior = labirinto[i - 1];
-//						if( linha.charAt(j - 1) == '#' || linhaAnterior.charAt(j) == '#') {
-//							throw new InvalidFormatException("Saida bloqueado!");
-//						}
-//					}	
-//				}
-//			}
-//		}
-//	}
+	public static void exitPositionValidation(String[] labirinto) throws InvalidFormatException {
+		for (int i = 1; i < labirinto.length; i++) {
+			String linha = labirinto[i];
+			for (int j = 0; j < linha.length(); j++) {
+				String linhaAnterior;
+				String linhaPosterior;
+				if (linha.charAt(j) == 'S') {
+					if((i > 1 && i < linha.length()) && ((j > 0) && (j < linha.length()))) {
+						linhaAnterior = labirinto[i - 1];
+						linhaPosterior = labirinto[i + 1];
+						System.out.println("Entrou no 1 if");
+						if((linhaAnterior.charAt(j) == '#') && (linha.charAt(j + 1) == '#') && ((linha.charAt(j - 1) == '#')
+								&& (linhaPosterior.charAt(j) == '#')))
+							throw new InvalidFormatException("Entrada bloqueada!");
+					}						
+					
+					if(i == 1 && (j > 0) && (j < linha.length())) {
+						System.out.println("Entrou no 2 if");
+						linhaPosterior = labirinto[i + 1];
+						if((linha.charAt(j + 1) == '#') && (linha.charAt(j - 1) == '#')
+								&& (linhaPosterior.charAt(j) == '#'))
+							throw new InvalidFormatException("Entrada bloqueada!");
+					}
+					if((i == linha.length()) && (j > 0) && (j < linha.length())) {
+						linhaAnterior = labirinto[i - 1];
+						System.out.println("Entrou no 3 if");
+						if((linhaAnterior.charAt(j) == '#') && ((linha.charAt(j + 1) == '#') || linha.charAt(j - 1) == '#'))
+							throw new InvalidFormatException("Entrada bloqueada!");
+					}
+			
+					if(j == 0 && i == 1) {
+						linhaPosterior = labirinto[i + 1];
+						System.out.println("Entrou no 4 if");
+						if( linha.charAt(j + 1) == '#' && linhaPosterior.charAt(j) == '#')
+							throw new InvalidFormatException("Entrada bloqueada!");
+					}
+					if(j == 0 && i == linha.length()) {
+						System.out.println("Entrou no 5 if");
+						linhaPosterior = labirinto[i + 1];
+						if( linha.charAt(j + 1) == '#' && linhaPosterior.charAt(j) == '#')
+							throw new InvalidFormatException("Entrada bloqueada!");
+					}
+					if(j == linha.length() && i == 1) {
+						System.out.println("Entrou no 7 if");
+						linhaAnterior = labirinto[i - 1];
+						if( linha.charAt(j - 1) == '#' && linhaAnterior.charAt(j) == '#')
+							throw new InvalidFormatException("Entrada bloqueada!");
+					}
+					if(j == linha.length() && i == linha.length()) {
+						System.out.println("Entrou no 8 if");
+						linhaAnterior = labirinto[i - 1];
+						if( linha.charAt(j - 1) == '#' && linhaAnterior.charAt(j) == '#') {
+							throw new InvalidFormatException("Entrada bloqueado!");
+						}
+					}	
+				}
+			}
+		}
+	}
 
 	public static void theFirstLineIsInt(String firstLine) throws InvalidFormatException {
 		if (!(Integer.parseInt(firstLine) > 0 && Integer.parseInt(firstLine) < 10000000)) {
