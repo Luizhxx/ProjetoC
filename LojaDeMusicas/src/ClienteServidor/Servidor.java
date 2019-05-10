@@ -1,4 +1,4 @@
-package Servidor;
+package ClienteServidor;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -9,12 +9,12 @@ import java.net.Socket;
 public class Servidor implements Runnable {
 
 	public static void main(String[] args) throws Exception {
-		int porta = 56451;
+		int porta = 56429;
 		ServerSocket servidor = new ServerSocket(porta);
 		System.out.println("Porta " + porta + " aberta!");
 		System.out.println("Aguardando conexão do cliente...");
 
-		// Faz com que o servidor receba vaios clientes até que seja encerrado
+// Faz com que o servidor receba vaios clientes até que seja encerrado
 		while (true) {
 			Socket cliente = servidor.accept();
 			Servidor tratamento = new Servidor(cliente, servidor);
@@ -31,32 +31,28 @@ public class Servidor implements Runnable {
 		this.servidor = servidor;
 	}
 
-	// Classe que trata a conexão e executa os protocolos
+// Classe que trata a conexão e executa os protocolos
 	public void tratarConexao() throws Exception {
 
-		// Receptor
+// Receptor
 		ObjectOutputStream output = new ObjectOutputStream(this.cliente.getOutputStream());
-		// Transmissor
+// Transmissor
 		ObjectInputStream input = new ObjectInputStream(this.cliente.getInputStream());
-
+		
 		Comunicado comunicado = (Comunicado) input.readObject();
 		String comando = comunicado.getComando();
 		comando.toUpperCase();
-
-		switch (comando) {
-			case "FIM":
-				
-				break;
-			}
 		
-		output.writeUTF("Seja bem vindo!");
-		output.flush();
-		output.close();
-		input.close();
+		switch (comando) {
+		case "SAIU":
+			System.out.println("Cliente " + this.cliente.getInetAddress().getHostAddress() + " desconectou!");
+			output.flush();
+			output.close();
+			input.close();
+		}
 	}
 
-	// Thread onde ocorre o tratamento da conexão. Para cada cliente é gerada uma
-	// nova Thread separada.
+// Thread onde ocorre o tratamento da conexão. Para cada cliente é gerada uma nova Thread separada.
 	public void run() {
 		System.out.println("Nova conexao com o cliente " + this.cliente.getInetAddress().getHostAddress());
 

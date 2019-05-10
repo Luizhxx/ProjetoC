@@ -1,23 +1,15 @@
-package Servidor;
+package ClienteServidor;
 
-import java.io.Serializable;
 import java.util.Arrays;
 
-public class Musica implements Serializable {
-	
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	
+public class Musica {
 	private String titulo;
 	private String[] cantores;
 	private String estilo;
 	private String capa;
 	private double preco;
 	private int tempo;
+	
 	
 	public Musica(String titulo, String[] cantores, String estilo, 
 				String capa, double preco, int tempo)throws Exception {
@@ -94,6 +86,7 @@ public class Musica implements Serializable {
 		this.tempo = tempo;
 	}
 
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -107,6 +100,7 @@ public class Musica implements Serializable {
 		result = prime * result + ((titulo == null) ? 0 : titulo.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -135,6 +129,7 @@ public class Musica implements Serializable {
 			return false;
 		return true;
 	}
+
 
 	@Override
 	public String toString() {
