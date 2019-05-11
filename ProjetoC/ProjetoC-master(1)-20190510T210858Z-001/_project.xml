@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>ProjetoC-master(1)-20190510T210858Z-001</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>hibernateJars</name>
+			<type>2</type>
+			<location>C:/Users/LuizHenriquedaSilva/Desktop/ProjetoC-master(1)-20190510T210858Z-001/ProjetoC-master(1)/ProjetoC-master/hibernateJars</location>
+		</link>
+	</linkedResources>
+</projectDescription>
