@@ -46,29 +46,36 @@ public class Servidor implements Runnable {
 		ObjectInputStream input = new ObjectInputStream(this.cliente.getInputStream());
 		List<Musicas> musicasPesquisadas = new ArrayList<Musicas>();
 		
-		Comunicado mensagem;
-
-		Comunicado comunicado = (Comunicado) input.readObject();
-		String comando = comunicado.getComando();
+		Comunicado mensagem = (Comunicado) input.readObject();
+		String comando = mensagem.getComando();
 		comando.toUpperCase();
 		
 		
 		switch (comando) {
 		
-		case "COM":
-			musicasPesquisadas = Optional.ofNullable(DBConnection.getMusicsByCantor(comunicado.getBusca()))
-					.orElse(DBConnection.getMusicsByEstilo(comunicado.getBusca()));
+		case "CON":
+			musicasPesquisadas = DBConnection.getMusicsByCantor(mensagem.getBusca());
+				
+			System.out.println("\n\n\n" + mensagem.getBusca());
+			System.out.println("\n\n\n" + musicasPesquisadas);
+
 			
-			if (musicasPesquisadas == null) {
-				musicasPesquisadas = Optional.ofNullable(DBConnection.getMusicsByTitle(comunicado.getBusca()))
-						.orElseThrow(() -> new Exception("Nâo existe henhuma música que possui esse parametro"));
+			if (musicasPesquisadas.size() == 0) {
+				musicasPesquisadas = DBConnection.getMusicsByEstilo(mensagem.getBusca());
 			}
-			mensagem = new Comunicado("COM", musicasPesquisadas);
+			System.out.println("\n\n\n" + musicasPesquisadas);
+
+			
+			if (musicasPesquisadas.size() == 0) {
+				musicasPesquisadas = DBConnection.getMusicsByTitle(mensagem.getBusca());
+			}
+			
+			System.out.println("\n\n\n" + musicasPesquisadas);
+			mensagem = new Comunicado("CON", musicasPesquisadas);
 			output.writeObject(mensagem);
 			output.flush();
-			output.close();
-			
 			break;	
+			
 		case "FIC":
 			System.out.println("Cliente " + this.cliente.getInetAddress().getHostAddress() + " desconectou!");
 			output.flush();

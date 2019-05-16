@@ -7,7 +7,7 @@ import java.net.Socket;
 public class Cliente implements Runnable{
 
 	public static void main(String args[]) throws Exception {
-        Socket socket = new Socket("localhost", 56429);
+        Socket socket = new Socket("localhost", 56433);
         Cliente cliente = new Cliente(socket);
 	    Thread sessao = new Thread(cliente);
 	    sessao.start();
@@ -27,30 +27,48 @@ public class Cliente implements Runnable{
     	Comunicado mensagem;
     	
     	System.out.println("O cliente conectou ao servidor");
+    	
     	System.out.println("Digite o comando: ");
     	
     	while(comando == null) {
     		comando = Teclado.Teclado.getUmString().toUpperCase();
     	}
     	
-    	if(comando!= null && comando != "FIC") {
 //Receptor
-            output = new ObjectOutputStream(this.cliente.getOutputStream());
+        output = new ObjectOutputStream(this.cliente.getOutputStream());
 //Transmissor
-    		input = new ObjectInputStream(this.cliente.getInputStream());
+    	input = new ObjectInputStream(this.cliente.getInputStream());
     		
-    		switch(comando) {
-    			case "FIC":
-    				mensagem = new Comunicado("FIC");
-    				output.writeObject(mensagem);
-    				output.flush();
-    				output.close();
-    				input.close();
-    				this.cliente.close();
-    	            System.out.println("Fim do cliente!");
-    	            break;
+    	switch(comando) {
+    		
+    		case "CON":
+    			System.out.println("Digite sua busca: ");
+    			String busca = Teclado.Teclado.getUmString().toUpperCase();
+    			mensagem = new Comunicado("CON", busca);
+    			output.writeObject(mensagem);
+    			output.flush();
+    			
+    			mensagem = (Comunicado) input.readObject();
+    			
+    			System.out.println("Receido com sucesso! " + mensagem.getMusica());
+    			break;
+    				
+    		case "FIC":
+    			mensagem = new Comunicado("FIC");
+    			output.writeObject(mensagem);
+    			output.flush();
+   				output.close();
+   				input.close();
+   				this.cliente.close();
+   	            System.out.println("Fim do cliente!");
+   	            break;
+   	            
+    		default:
+    			output.defaultWriteObject();
+    			output.close();
+   				input.close();
+    			System.out.println("Comando invalido");
     		}
-    	}	
     }
 
 //Thread onde ocorre a comunicação do cliente com o servidor.
