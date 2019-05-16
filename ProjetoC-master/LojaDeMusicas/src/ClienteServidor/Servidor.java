@@ -4,6 +4,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import dbo.DBConnection;
+import dbo.Musicas;
 
 public class Servidor implements Runnable {
 
@@ -38,17 +44,37 @@ public class Servidor implements Runnable {
 		ObjectOutputStream output = new ObjectOutputStream(this.cliente.getOutputStream());
 // Transmissor
 		ObjectInputStream input = new ObjectInputStream(this.cliente.getInputStream());
+		List<Musicas> musicasPesquisadas = new ArrayList<Musicas>();
 		
+		Comunicado mensagem;
+
 		Comunicado comunicado = (Comunicado) input.readObject();
 		String comando = comunicado.getComando();
 		comando.toUpperCase();
 		
+		
 		switch (comando) {
+		
+		case "COM":
+			musicasPesquisadas = Optional.ofNullable(DBConnection.getMusicsByCantor(comunicado.getBusca()))
+					.orElse(DBConnection.getMusicsByEstilo(comunicado.getBusca()));
+			
+			if (musicasPesquisadas == null) {
+				musicasPesquisadas = Optional.ofNullable(DBConnection.getMusicsByTitle(comunicado.getBusca()))
+						.orElseThrow(() -> new Exception("Nâo existe henhuma música que possui esse parametro"));
+			}
+			mensagem = new Comunicado("COM", musicasPesquisadas);
+			output.writeObject(mensagem);
+			output.flush();
+			output.close();
+			
+			break;	
 		case "FIC":
 			System.out.println("Cliente " + this.cliente.getInetAddress().getHostAddress() + " desconectou!");
 			output.flush();
 			output.close();
 			input.close();
+			break;
 		}
 	}
 

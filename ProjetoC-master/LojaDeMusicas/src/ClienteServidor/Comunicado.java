@@ -1,6 +1,9 @@
 package ClienteServidor;
 
 import java.io.Serializable;
+import java.util.List;
+
+import dbo.Musicas;
 
 public class Comunicado implements Serializable{
 	/**
@@ -9,10 +12,10 @@ public class Comunicado implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private String comando;
-	private Object musica;
+	private List<Musicas> musica;
 	private String busca;
 	
-	public Comunicado(String comando, Object musica) throws Exception {
+	public Comunicado(String comando, List<Musicas> musica) throws Exception {
 		
 		if(comando == null || comando == "")
 			throw new Exception("Comando ausente");
@@ -50,11 +53,11 @@ public Comunicado(String comando, String busca) throws Exception {
 		this.comando = comando;
 	}
 
-	public Object getMusica() {
+	public List<Musicas> getMusica() {
 		return musica;
 	}
 
-	public void setMusica(Object musica) {
+	public void setMusica(List<Musicas> musica) {
 		this.musica = musica;
 	}
 
