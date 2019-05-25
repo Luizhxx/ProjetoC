@@ -1,4 +1,4 @@
-package Teclado;
+package Recursos;
 
 import java.io.*;
 

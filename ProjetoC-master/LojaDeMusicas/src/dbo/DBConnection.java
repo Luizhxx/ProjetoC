@@ -36,8 +36,8 @@ public class DBConnection {
 
 		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 		Session session = sessionFactory.openSession();
-		List<Musicas> musicas = (List<Musicas>) session.createSQLQuery("SELECT * FROM musicas WHERE titulo='" + titulo + "'")
-				.addEntity(Musicas.class).list();
+		List<Musicas> musicas = (List<Musicas>) session
+				.createSQLQuery("SELECT * FROM musicas WHERE titulo='" + titulo + "'").addEntity(Musicas.class).list();
 		session.close();
 		return musicas;
 	}
@@ -47,18 +47,21 @@ public class DBConnection {
 
 		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 		Session session = sessionFactory.openSession();
-		List<Musicas> musicas = (List<Musicas>) session.createSQLQuery("SELECT * FROM musicas WHERE musicas.estilo ='" + estilo + "'")
-				.addEntity(Musicas.class).list();
+		List<Musicas> musicas = (List<Musicas>) session
+				.createSQLQuery("SELECT * FROM musicas WHERE musicas.estilo ='" + estilo + "'").addEntity(Musicas.class)
+				.list();
 		session.close();
 		return musicas;
 	}
+
 	@SuppressWarnings("unchecked")
 	public static List<Musicas> getMusicsByCantor(String cantor) {
 
 		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 		Session session = sessionFactory.openSession();
-		List<Musicas> musicas = (List<Musicas>) session.createSQLQuery("SELECT * FROM musicas WHERE cantores='" + cantor + "'")
-				.addEntity(Musicas.class).list();
+		List<Musicas> musicas = (List<Musicas>) session
+				.createSQLQuery("SELECT * FROM musicas WHERE cantores='" + cantor + "'").addEntity(Musicas.class)
+				.list();
 		session.close();
 		return musicas;
 	}

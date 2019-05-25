@@ -155,8 +155,7 @@ public class Musicas implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Musicas [id=" + id + ", titulo=" + titulo + ", cantores=" + cantores + ", estilo=" + estilo + ", capa="
-				+ capa + ", preco=" + preco + ", tempo=" + tempo + "]";
+		return "TITULO : " + titulo + " | CANTORES : " + cantores + " | PRECO = R$" + preco + " | TEMPO : " + tempo;
 	}
 
 	

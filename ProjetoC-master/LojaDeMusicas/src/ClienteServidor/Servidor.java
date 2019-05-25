@@ -6,7 +6,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import dbo.DBConnection;
 import dbo.Musicas;
@@ -14,7 +13,7 @@ import dbo.Musicas;
 public class Servidor implements Runnable {
 
 	public static void main(String[] args) throws Exception {
-		int porta = 56433;
+		int porta = 12353;
 		ServerSocket servidor = new ServerSocket(porta);
 		System.out.println("Porta " + porta + " aberta!");
 		System.out.println("Aguardando conexão do cliente...");
@@ -45,43 +44,43 @@ public class Servidor implements Runnable {
 // Transmissor
 		ObjectInputStream input = new ObjectInputStream(this.cliente.getInputStream());
 		List<Musicas> musicasPesquisadas = new ArrayList<Musicas>();
-		
+
 		Comunicado mensagem = (Comunicado) input.readObject();
 		String comando = mensagem.getComando();
 		comando.toUpperCase();
-		
-		
+
 		switch (comando) {
-		
+
 		case "CON":
-			musicasPesquisadas = DBConnection.getMusicsByCantor(mensagem.getBusca());
-				
-			System.out.println("\n\n\n" + mensagem.getBusca());
-			System.out.println("\n\n\n" + musicasPesquisadas);
+			if (mensagem.getBusca().isEmpty() == true) {
+				musicasPesquisadas = DBConnection.getAllMusics();
+			} else {
+				musicasPesquisadas = DBConnection.getMusicsByCantor(mensagem.getBusca());
 
-			
-			if (musicasPesquisadas.size() == 0) {
-				musicasPesquisadas = DBConnection.getMusicsByEstilo(mensagem.getBusca());
-			}
-			System.out.println("\n\n\n" + musicasPesquisadas);
+				if (musicasPesquisadas.size() == 0) {
+					musicasPesquisadas = DBConnection.getMusicsByEstilo(mensagem.getBusca());
+				}
 
-			
-			if (musicasPesquisadas.size() == 0) {
-				musicasPesquisadas = DBConnection.getMusicsByTitle(mensagem.getBusca());
+				if (musicasPesquisadas.size() == 0) {
+					musicasPesquisadas = DBConnection.getMusicsByTitle(mensagem.getBusca());
+				}
 			}
-			
-			System.out.println("\n\n\n" + musicasPesquisadas);
+
 			mensagem = new Comunicado("CON", musicasPesquisadas);
 			output.writeObject(mensagem);
 			output.flush();
-			break;	
-			
+			break;
+
 		case "FIC":
 			System.out.println("Cliente " + this.cliente.getInetAddress().getHostAddress() + " desconectou!");
 			output.flush();
 			output.close();
 			input.close();
 			break;
+
+		default:
+			output.writeObject("");
+			output.flush();
 		}
 	}
 
@@ -90,9 +89,12 @@ public class Servidor implements Runnable {
 		System.out.println("Nova conexao com o cliente " + this.cliente.getInetAddress().getHostAddress());
 
 		try {
-			tratarConexao();
+			while (true) {
+				tratarConexao();
+			}
 		} catch (Exception erro) {
 			erro.printStackTrace();
 		}
 	}
+
 }
