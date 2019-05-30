@@ -52,18 +52,15 @@ public class Servidor implements Runnable {
 		switch (comando) {
 
 		case "CON":
-			if (mensagem.getBusca().isEmpty() == true) {
-				musicasPesquisadas = DBConnection.getAllMusics();
-			} else {
-				musicasPesquisadas = DBConnection.getMusicsByCantor(mensagem.getBusca());
 
-				if (musicasPesquisadas.size() == 0) {
-					musicasPesquisadas = DBConnection.getMusicsByEstilo(mensagem.getBusca());
-				}
+			musicasPesquisadas = DBConnection.getMusicsByCantor(mensagem.getBusca());
 
-				if (musicasPesquisadas.size() == 0) {
-					musicasPesquisadas = DBConnection.getMusicsByTitle(mensagem.getBusca());
-				}
+			if (musicasPesquisadas.size() == 0) {
+				musicasPesquisadas = DBConnection.getMusicsByEstilo(mensagem.getBusca());
+			}
+
+			if (musicasPesquisadas.size() == 0) {
+				musicasPesquisadas = DBConnection.getMusicsByTitle(mensagem.getBusca());
 			}
 
 			mensagem = new Comunicado("CON", musicasPesquisadas);
